@@ -11,7 +11,12 @@
   </form>
   <div class="wrapper">
     <div v-for="(row, i) in gridStats" :key="i">
-      <button v-for="(cell, j) in row" :key="j" @click="deployCats(i, j)">
+      <button
+        v-for="(cell, j) in row"
+        :key="j"
+        :class="[cell ? 'deployed' : '']"
+        @click="deployCats(i, j)"
+      >
         {{ cell ? cell : "-" }}
       </button>
     </div>
@@ -74,6 +79,9 @@ const deployCats = (row, col) => {
 }
 button:hover {
   background-color: #eaeaea;
+}
+button.deployed {
+  background-color: #e67e80;
 }
 @media (max-width: 1024px) {
   .wrapper button {
