@@ -1,6 +1,10 @@
 <template>
   <form @submit.prevent="updateData">
-    <span>Width: {{ content }}</span>
+    <span class="h1">Width: {{ content }}</span>
+    <span class="h1" v-show="content">
+      <br />
+      Height: {{ Math.floor(content * 1.5) }}
+    </span>
     <br />
     <input
       type="text"
@@ -68,6 +72,9 @@ const deployCats = (row, col) => {
 };
 </script>
 <style scoped>
+.h1 {
+  font-size: 1.8rem;
+}
 .wrapper button {
   width: 50px;
   height: 50px;
