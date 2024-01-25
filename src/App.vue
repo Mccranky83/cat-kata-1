@@ -1,5 +1,7 @@
 <template>
   <form @submit.prevent="updateData">
+    <span>Width: {{ content }}</span>
+    <br />
     <input
       type="text"
       :value="content"
@@ -7,7 +9,8 @@
       @input="(e) => (content = e.target.value)"
     />
     <button>Submit</button>
-    <button @click.prevent="resetGrid">Refresh</button>
+    <button @click.prevent="resetGrid">Reset</button>
+    <button @click.prevent="refreshGrid">Refresh</button>
   </form>
   <div class="wrapper">
     <div v-for="(row, i) in gridStats" :key="i">
@@ -35,7 +38,20 @@ const resetGrid = () => {
   gridStats.value = initGrid(rowNum.value);
   console.log(`rowNum: ${rowNum.value}`);
 };
+const refreshGrid = () => {
+  gridStats.value.forEach((t, i) => {
+    t.forEach((e, j) => {
+      gridStats.value[i][j] = !gridStats.value[i][j];
+      deployCats(i, j);
+    });
+  });
+};
 const updateData = () => {
+  if (Number(content.value) > 100) {
+    alert("Number is way too large!");
+    content.value = "";
+    return 0;
+  }
   rowNum.value = Number(content.value);
   gridStats.value = initGrid(rowNum.value);
   content.value = "";
