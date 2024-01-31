@@ -28,6 +28,9 @@
       </button>
     </div>
   </div>
+  <div>
+    <p v-show="output" class="h1">Mini Distance: {{ output }}</p>
+  </div>
 </template>
 <script setup>
 import { ref, computed } from "vue";
@@ -38,9 +41,12 @@ const initGrid = (rows) => {
   return [...Array(rows)].map(() => [...Array(cols)].map(() => false));
 };
 const gridStats = ref(initGrid(rowNum.value));
+let coords = [];
+const output = ref();
 const resetGrid = () => {
   gridStats.value = initGrid(rowNum.value);
-  console.log(`rowNum: ${rowNum.value}`);
+  coords = [];
+  output.value = undefined;
 };
 const refreshGrid = () => {
   gridStats.value.forEach((t, i) => {
@@ -59,16 +65,41 @@ const updateData = () => {
   rowNum.value = Number(content.value);
   gridStats.value = initGrid(rowNum.value);
   content.value = "";
-  console.log(`rowNum: ${rowNum.value}`);
+  coords = [];
+  output.value = undefined;
 };
 const deployCats = (row, col) => {
   gridStats.value[row][col] = !gridStats.value[row][col];
+  coords = coords.filter(
+    (t) => JSON.stringify(t) !== JSON.stringify([row, col]),
+  );
   if (gridStats.value[row][col]) {
     gridStats.value[row][col] = String.fromCharCode(
       Math.floor(Math.random() * 26 + 65),
     );
+    coords.push([row, col]);
   }
-  console.log(`row: ${row}, col: ${col}`);
+  coords.length && calculateDistance();
+};
+const calculateDistance = () => {
+  let distances = coords
+    .map((coord, i) =>
+      coords
+        .filter((_, otherIndex) => i != otherIndex)
+        .map((otherCoord) => [
+          Math.abs(coord[0] - otherCoord[0]),
+          Math.abs(coord[1] - otherCoord[1]),
+        ]),
+    )
+    .flat()
+    .filter(
+      (coord, i, self) =>
+        i == self.findIndex((t) => t[0] == coord[0] && t[1] == coord[1]), // Remove duplicate values
+    )
+    .map((t) => Math.hypot(...t).toFixed(3));
+  output.value = distances.length
+    ? distances.reduce((acc, cur) => Math.min(acc, cur))
+    : undefined;
 };
 </script>
 <style scoped>
