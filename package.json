@@ -1,9 +1,10 @@
 {
-  "name": "vue3-project",
+  "name": "cat-kata-part-one-demo",
   "version": "0.0.0",
   "private": true,
   "type": "module",
   "scripts": {
+    "start": "node src/server.js",
     "dev": "vite",
     "dev-watch": "nodemon -x 'npm run dev'",
     "build": "vite build",
