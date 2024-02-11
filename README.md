@@ -2,6 +2,10 @@
 
 This project is a visual representation of a Kata found on Codewars. Check out the problem [here][1].
 
+## Live Demo
+
+[View Demo](https://simple-todo-list-b6nx.onrender.com)
+
 ## Project Setup
 
 ```sh
