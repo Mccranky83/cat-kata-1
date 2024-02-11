@@ -4,7 +4,7 @@ This project is a visual representation of a Kata found on Codewars. Check out t
 
 ## Live Demo
 
-[View Demo](https://simple-todo-list-b6nx.onrender.com)
+[View Demo][2]
 
 ## Project Setup
 
@@ -25,3 +25,4 @@ npm run build
 ```
 
 [1]: https://www.codewars.com/kata/5869848f2d52095be20001d1
+[2]: https://cat-kata-part-one-demo.onrender.com
